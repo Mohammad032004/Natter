@@ -57,15 +57,14 @@ export default function SignupPage() {
           {/* 3D illustration */}
           <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center py-3">
             <Image
-              src="/natter-3d.png"
-              alt="Abstract 3D illustration for Natter"
-              width={600}
-              height={600}
-              priority
-              className="h-auto max-h-full w-full max-w-[450px] object-contain drop-shadow-xl"
+                src="/natter.png"
+                alt="Abstract 3D illustration for Natter"
+                width={1000}
+                height={1000}
+                priority
+                className="h-auto max-h-full w-full max-w-[750px] scale-125 object-contain drop-shadow-xl"
             />
-          </div>
-
+            </div>
           {/* Footer */}
           <p className="relative z-10 text-xs text-white/70 xl:text-sm">
             Your conversations. Your people. Your space.
