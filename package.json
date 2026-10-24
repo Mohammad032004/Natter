@@ -1,4 +1,3 @@
-
 {
   "name": "natter",
   "version": "1.0.0",
@@ -11,5 +10,11 @@
     "dev": "npm run dev --workspace=@natter/web",
     "build": "npm run build --workspace=@natter/web",
     "lint": "npm run lint --workspace=@natter/web"
+  },
+  "dependencies": {
+    "nodemailer": "^10.2.1"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.2"
   }
 }
