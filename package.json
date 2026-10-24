@@ -12,6 +12,7 @@
     "lint": "npm run lint --workspace=@natter/web"
   },
   "dependencies": {
+    "jose": "^6.2.13",
     "mongodb": "^7.7.0",
     "nodemailer": "^10.2.1"
   },
