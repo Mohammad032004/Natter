@@ -5,7 +5,6 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  ArrowLeft,
   ArrowRight,
   MessageCircle,
   User,
@@ -26,12 +25,14 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white text-[#242424]">
-      <div className="grid min-h-screen lg:grid-cols-2">
+    <main className="h-screen overflow-hidden bg-white text-[#242424]">
+      <div className="grid h-full lg:grid-cols-2">
         {/* Left illustration panel */}
-        <section className="relative hidden overflow-hidden bg-[#b5dce2] lg:flex lg:flex-col lg:justify-between lg:p-12">
+        <section className="relative hidden h-full overflow-hidden bg-[#b5dce2] lg:flex lg:flex-col lg:justify-between lg:p-8 xl:p-10">
+          {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#c5e7e9] via-[#b5dce2] to-[#91cbd5]" />
 
+          {/* Branding and introduction */}
           <div className="relative z-10">
             <Link href="/" className="inline-flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/80 text-[#4d9eac]">
@@ -43,35 +44,38 @@ export default function SignupPage() {
               </span>
             </Link>
 
-            <h2 className="mt-12 max-w-md text-4xl font-semibold leading-tight tracking-tight text-white">
+            <h2 className="mt-8 max-w-md text-3xl font-semibold leading-tight tracking-tight text-white xl:text-4xl">
               Conversations that bring us closer.
             </h2>
 
-            <p className="mt-4 max-w-sm text-base leading-7 text-white/80">
+            <p className="mt-3 max-w-sm text-sm leading-6 text-white/80 xl:text-base">
               A simple, private, and meaningful way to connect with
               the people who matter.
             </p>
           </div>
 
-          <div className="relative z-10 flex flex-1 items-center justify-center py-8">
+          {/* 3D illustration */}
+          <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center py-3">
             <Image
               src="/natter-3d.png"
               alt="Abstract 3D illustration for Natter"
               width={600}
               height={600}
               priority
-              className="h-auto w-full max-w-[550px] object-contain drop-shadow-xl"
+              className="h-auto max-h-full w-full max-w-[450px] object-contain drop-shadow-xl"
             />
           </div>
 
-          <p className="relative z-10 text-sm text-white/70">
+          {/* Footer */}
+          <p className="relative z-10 text-xs text-white/70 xl:text-sm">
             Your conversations. Your people. Your space.
           </p>
         </section>
 
         {/* Right account creation panel */}
-        <section className="relative flex min-h-screen items-center justify-center px-6 py-12 sm:px-12 lg:px-16">
-          <div className="absolute right-8 top-8">
+        <section className="relative flex h-full min-h-0 items-center justify-center overflow-hidden px-6 py-4 sm:px-10 lg:px-10 xl:px-16">
+          {/* Back to home */}
+          <div className="absolute right-6 top-5 sm:right-8">
             <Link
               href="/"
               className="text-sm text-gray-500 transition hover:text-[#4d9eac]"
@@ -82,7 +86,7 @@ export default function SignupPage() {
 
           <div className="w-full max-w-md">
             {/* Mobile brand */}
-            <div className="mb-10 flex items-center gap-3 lg:hidden">
+            <div className="mb-6 flex items-center gap-3 lg:hidden">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#7fc2ce] text-white">
                 <MessageCircle size={22} />
               </div>
@@ -92,8 +96,9 @@ export default function SignupPage() {
               </span>
             </div>
 
-            <div className="mb-8">
-              <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-[#65aebb]">
+            {/* Heading */}
+            <div className="mb-5">
+              <p className="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-[#65aebb]">
                 Get started
               </p>
 
@@ -101,17 +106,18 @@ export default function SignupPage() {
                 Create an account
               </h1>
 
-              <p className="mt-3 text-sm leading-6 text-gray-500">
+              <p className="mt-2 text-sm leading-5 text-gray-500">
                 Join Natter and start connecting with your people.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Signup form */}
+            <form onSubmit={handleSubmit} className="space-y-3">
               {/* Full name */}
               <div>
                 <label
                   htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-1.5 block text-sm font-medium text-gray-700"
                 >
                   Full name
                 </label>
@@ -130,7 +136,7 @@ export default function SignupPage() {
                     placeholder="Enter your full name"
                     autoComplete="name"
                     required
-                    className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#7fc2ce] focus:ring-4 focus:ring-[#7fc2ce]/15"
+                    className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#7fc2ce] focus:ring-4 focus:ring-[#7fc2ce]/15"
                   />
                 </div>
               </div>
@@ -139,7 +145,7 @@ export default function SignupPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-1.5 block text-sm font-medium text-gray-700"
                 >
                   Email address
                 </label>
@@ -158,7 +164,7 @@ export default function SignupPage() {
                     placeholder="you@example.com"
                     autoComplete="email"
                     required
-                    className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#7fc2ce] focus:ring-4 focus:ring-[#7fc2ce]/15"
+                    className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#7fc2ce] focus:ring-4 focus:ring-[#7fc2ce]/15"
                   />
                 </div>
               </div>
@@ -167,7 +173,7 @@ export default function SignupPage() {
               <div>
                 <label
                   htmlFor="username"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-1.5 block text-sm font-medium text-gray-700"
                 >
                   Username
                 </label>
@@ -189,30 +195,35 @@ export default function SignupPage() {
                     pattern="[A-Za-z0-9_]+"
                     title="Use letters, numbers, and underscores only."
                     required
-                    className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#7fc2ce] focus:ring-4 focus:ring-[#7fc2ce]/15"
+                    className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#7fc2ce] focus:ring-4 focus:ring-[#7fc2ce]/15"
                   />
                 </div>
 
-                <p className="mt-2 text-xs text-gray-400">
+                <p className="mt-1.5 text-xs text-gray-400">
                   Your unique identity on Natter.
                 </p>
               </div>
 
+              {/* Submit */}
               <button
                 type="submit"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#7fc2ce] py-3.5 text-sm font-semibold text-white transition hover:bg-[#68b3c0] active:scale-[0.99]"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#7fc2ce] py-3 text-sm font-semibold text-white transition hover:bg-[#68b3c0] active:scale-[0.99]"
               >
                 Continue with email
                 <ArrowRight size={18} />
               </button>
             </form>
 
-            <div className="my-7 flex items-center gap-4">
+            {/* Divider */}
+            <div className="my-4 flex items-center gap-4">
               <div className="h-px flex-1 bg-gray-200" />
+
               <span className="text-xs text-gray-400">OR</span>
+
               <div className="h-px flex-1 bg-gray-200" />
             </div>
 
+            {/* Login link */}
             <p className="text-center text-sm text-gray-500">
               Already have an account?{" "}
               <Link
@@ -223,7 +234,8 @@ export default function SignupPage() {
               </Link>
             </p>
 
-            <p className="mt-8 text-center text-xs leading-5 text-gray-400">
+            {/* Terms */}
+            <p className="mt-4 text-center text-xs leading-5 text-gray-400">
               By continuing, you agree to Natter&apos;s Terms of Service
               and Privacy Policy.
             </p>
