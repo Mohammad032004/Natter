@@ -1,27 +1,70 @@
+
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
   Mail,
   MessageCircle,
+  Loader2,
 } from "lucide-react";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!email.trim()) {
-      alert("Please enter your email address.");
+    setError("");
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!normalizedEmail || !password) {
+      setError("Please enter your email address and password.");
       return;
     }
 
-    alert(`OTP authentication will be connected for ${email}.`);
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: normalizedEmail,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Invalid email or password.");
+        return;
+      }
+
+      // The API creates the HTTP-only session cookie.
+      // Redirect after successful authentication.
+      router.replace("/dashboard");
+      router.refresh();
+    } catch (error) {
+      console.error("Login request failed:", error);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,6 +107,7 @@ export default function LoginPage() {
           </div>
 
           <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[#635bff]/10 blur-3xl" />
+
           <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#8b5cf6]/10 blur-3xl" />
         </section>
 
@@ -99,7 +143,8 @@ export default function LoginPage() {
               </h1>
 
               <p className="mt-3 text-sm leading-6 text-gray-500">
-                Enter your email address to continue to your account.
+                Enter your email address and password to continue to your
+                account.
               </p>
             </div>
 
@@ -131,18 +176,70 @@ export default function LoginPage() {
                     className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-12 pr-4 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#635bff] focus:ring-4 focus:ring-[#635bff]/10"
                   />
                 </div>
+
+                {/* Forgot Password */}
+                <div className="mt-3 flex justify-end">
+                  <Link
+                    href="/forgot-password"
+                    className="text-sm font-medium text-[#635bff] transition hover:text-[#5548e8]"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
               </div>
+
+              {/* Password */}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="mb-2 block text-sm font-medium text-gray-700"
+                >
+                  Password
+                </label>
+
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-sm outline-none transition placeholder:text-gray-400 focus:border-[#635bff] focus:ring-4 focus:ring-[#635bff]/10"
+                />
+              </div>
+
+              {/* Error message */}
+              {error && (
+                <div
+                  role="alert"
+                  className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"
+                >
+                  {error}
+                </div>
+              )}
 
               {/* Submit */}
               <button
                 type="submit"
-                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#635bff] py-3.5 text-sm font-semibold text-white transition hover:bg-[#5548e8] active:scale-[0.99]"
+                disabled={loading}
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#635bff] py-3.5 text-sm font-semibold text-white transition hover:bg-[#5548e8] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Continue with email
-                <ArrowRight
-                  size={17}
-                  className="transition-transform group-hover:translate-x-1"
-                />
+                {loading ? (
+                  <>
+                    <Loader2 size={17} className="animate-spin" />
+                    Logging in...
+                  </>
+                ) : (
+                  <>
+                    Continue with email
+                    <ArrowRight
+                      size={17}
+                      className="transition-transform group-hover:translate-x-1"
+                    />
+                  </>
+                )}
               </button>
             </form>
 
