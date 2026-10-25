@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 
 import {
   Paperclip,
@@ -18,7 +19,7 @@ export default function MessageComposer({
 }: MessageComposerProps) {
   const [message, setMessage] = useState("");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const text = message.trim();
@@ -51,9 +52,11 @@ export default function MessageComposer({
       </button>
 
       <input
+        type="text"
         value={message}
         onChange={(event) => setMessage(event.target.value)}
         placeholder="Type a message"
+        aria-label="Message"
         className="h-11 min-w-0 flex-1 rounded-full bg-slate-100 px-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-500 focus:bg-slate-50"
       />
 
