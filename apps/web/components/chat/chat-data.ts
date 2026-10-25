@@ -1,3 +1,4 @@
+
 import type { ChatConversation } from "./chat-types";
 
 export const initialConversations: ChatConversation[] = [
@@ -11,6 +12,8 @@ export const initialConversations: ChatConversation[] = [
     lastMessageTime: "Yesterday",
     unreadCount: 0,
     online: false,
+    isFavorite: false,
+    isGroup: false,
     messages: [
       {
         id: "message-1",
@@ -45,6 +48,8 @@ export const initialConversations: ChatConversation[] = [
     lastMessageTime: "8/21/2026",
     unreadCount: 0,
     online: false,
+    isFavorite: false,
+    isGroup: false,
     messages: [
       {
         id: "message-4",
@@ -79,6 +84,8 @@ export const initialConversations: ChatConversation[] = [
     lastMessageTime: "Thursday",
     unreadCount: 0,
     online: true,
+    isFavorite: false,
+    isGroup: false,
     messages: [
       {
         id: "message-7",
@@ -106,6 +113,8 @@ export const initialConversations: ChatConversation[] = [
     lastMessageTime: "11:37 PM",
     unreadCount: 6,
     online: true,
+    isFavorite: false,
+    isGroup: true,
     messages: [
       {
         id: "message-9",
@@ -133,6 +142,8 @@ export const initialConversations: ChatConversation[] = [
     lastMessageTime: "11:35 PM",
     unreadCount: 0,
     online: false,
+    isFavorite: false,
+    isGroup: false,
     messages: [
       {
         id: "message-11",
@@ -153,6 +164,8 @@ export const initialConversations: ChatConversation[] = [
     lastMessageTime: "11:14 PM",
     unreadCount: 0,
     online: false,
+    isFavorite: false,
+    isGroup: true,
     messages: [
       {
         id: "message-12",
