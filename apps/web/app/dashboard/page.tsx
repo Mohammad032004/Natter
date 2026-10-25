@@ -4,8 +4,8 @@ export const instant = false;
 
 export default function DashboardPage() {
   return (
-    <main className="h-full min-h-0">
+    <div className="h-full min-h-0">
       <ChatApp />
-    </main>
+    </div>
   );
 }
