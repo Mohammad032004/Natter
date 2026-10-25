@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Check, CheckCheck } from "lucide-react";
@@ -36,13 +37,18 @@ export default function MessageBubble({
           </span>
 
           {isMine && (
-            <span className="text-blue-500">
-              {message.status === "read" ? (
-                <CheckCheck className="h-3.5 w-3.5" />
-              ) : message.status === "delivered" ? (
-                <CheckCheck className="h-3.5 w-3.5 text-slate-400" />
+            <span
+              aria-label={`Message ${message.status ?? "sent"}`}
+              className={
+                message.status === "read"
+                  ? "text-blue-500"
+                  : "text-slate-400"
+              }
+            >
+              {message.status === "sent" ? (
+                <Check className="h-3.5 w-3.5" />
               ) : (
-                <Check className="h-3.5 w-3.5 text-slate-400" />
+                <CheckCheck className="h-3.5 w-3.5" />
               )}
             </span>
           )}
