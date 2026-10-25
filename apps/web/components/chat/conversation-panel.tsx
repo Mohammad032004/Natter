@@ -1,6 +1,6 @@
+
 "use client";
 
-import { useState } from "react";
 import { MessageCircle } from "lucide-react";
 
 import ConversationHeader from "./conversation-header";
@@ -22,7 +22,7 @@ export default function ConversationPanel({
 }: ConversationPanelProps) {
   if (!conversation) {
     return (
-      <div className="hidden h-full flex-col items-center justify-center bg-[#f7f7f7] text-center md:flex">
+      <div className="hidden h-full min-h-0 flex-col items-center justify-center bg-[#f7f7f7] text-center md:flex">
         <div className="mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-emerald-50">
           <MessageCircle className="h-12 w-12 text-emerald-500" />
         </div>
@@ -44,12 +44,13 @@ export default function ConversationPanel({
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
-      <div className="flex items-center gap-2">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden">
+      <div className="flex shrink-0 items-center gap-2">
         <button
           type="button"
           onClick={onBack}
-          className="ml-2 rounded-full p-2 text-slate-600 hover:bg-slate-100 md:hidden"
+          aria-label="Back to conversations"
+          className="ml-2 rounded-full p-2 text-slate-600 transition hover:bg-slate-100 md:hidden"
         >
           ←
         </button>
@@ -59,11 +60,15 @@ export default function ConversationPanel({
         </div>
       </div>
 
-      <MessageList messages={conversation.messages} />
+      <div className="min-h-0 flex-1 overflow-hidden">
+        <MessageList messages={conversation.messages} />
+      </div>
 
-      <MessageComposer
-        onSend={(text) => onSendMessage(conversation.id, text)}
-      />
+      <div className="shrink-0">
+        <MessageComposer
+          onSend={(text) => onSendMessage(conversation.id, text)}
+        />
+      </div>
     </div>
   );
 }
