@@ -3,7 +3,7 @@ export type ChatMessage = {
   senderId: string;
   text: string;
   time: string;
-  status: "sent" | "delivered" | "read";
+  status?: "sent" | "delivered" | "read";
 };
 
 export type ChatConversation = {
@@ -12,9 +12,13 @@ export type ChatConversation = {
   username: string;
   avatar: string;
   avatarColor: string;
+  online: boolean;
   lastMessage: string;
   lastMessageTime: string;
   unreadCount: number;
-  online: boolean;
   messages: ChatMessage[];
+
+  // Conversation properties
+  isFavorite?: boolean;
+  isGroup?: boolean;
 };
