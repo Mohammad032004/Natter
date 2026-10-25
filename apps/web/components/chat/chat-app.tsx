@@ -22,6 +22,21 @@ export default function ChatApp() {
   const activeConversation =
     conversations.find((chat) => chat.id === activeChatId) ?? null;
 
+  function handleToggleFavorite(conversationId: string) {
+    setConversations((current) =>
+      current.map((conversation) => {
+        if (conversation.id !== conversationId) {
+          return conversation;
+        }
+
+        return {
+          ...conversation,
+          isFavorite: !conversation.isFavorite,
+        };
+      })
+    );
+  }
+
   function handleSendMessage(conversationId: string, text: string) {
     const newMessage: ChatMessage = {
       id: crypto.randomUUID(),
@@ -62,6 +77,7 @@ export default function ChatApp() {
           conversations={conversations}
           activeChatId={activeChatId}
           onSelectChat={setActiveChatId}
+          onToggleFavorite={handleToggleFavorite}
         />
       </div>
 
