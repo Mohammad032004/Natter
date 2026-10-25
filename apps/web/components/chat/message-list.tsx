@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -13,16 +14,19 @@ export default function MessageList({
   messages,
 }: MessageListProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
+  const hasMounted = useRef(false);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({
-      behavior: "smooth",
+      behavior: hasMounted.current ? "smooth" : "auto",
       block: "end",
     });
+
+    hasMounted.current = true;
   }, [messages]);
 
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto bg-[#efe7dd] px-3 py-5 sm:px-6">
+    <div className="h-full min-h-0 overflow-y-auto bg-[#efe7dd] px-3 py-5 sm:px-6">
       <div className="mx-auto flex max-w-4xl flex-col gap-2">
         <div className="mb-3 flex justify-center">
           <span className="rounded-lg bg-white/90 px-3 py-1.5 text-[11px] text-slate-500 shadow-sm">
