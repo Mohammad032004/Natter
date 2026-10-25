@@ -1,44 +1,131 @@
 
+# ============================================================
+# NATTER - Git Ignore Configuration
+# Monorepo: Next.js Web App + Node.js Backend
+# ============================================================
+
+
+# ------------------------------------------------------------
 # Dependencies
+# ------------------------------------------------------------
+
+# Node.js dependencies installed by npm, pnpm, or Yarn
 node_modules/
+
+# Plug'n'Play files
 .pnp
 .pnp.*
+
+# Yarn cache and generated files
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
 
-# Testing
-coverage/
 
-# Next.js (all workspaces)
+# ------------------------------------------------------------
+# Environment Variables and Secrets
+# ------------------------------------------------------------
+
+# Ignore all environment files
+.env
+.env.*
+
+# Allow safe example environment files
+!.env.example
+
+# Never commit credentials, API keys, or database connection strings
+
+
+# ------------------------------------------------------------
+# Next.js
+# ------------------------------------------------------------
+
+# Next.js build and cache directories in all workspaces
 **/.next/
+
+# Static export output
 **/out/
 
-# Production builds
+# Vercel deployment configuration
+.vercel/
+
+
+# ------------------------------------------------------------
+# Build Outputs
+# ------------------------------------------------------------
+
+# Production and development build directories
 **/build/
 **/dist/
 
-# Environment files
-.env
-.env.*
-!.env.example
+# TypeScript incremental build information
+*.tsbuildinfo
 
-# Miscellaneous
-.DS_Store
-Thumbs.db
-*.pem
+# Generated Next.js TypeScript configuration
+next-env.d.ts
 
+
+# ------------------------------------------------------------
+# Testing and Coverage
+# ------------------------------------------------------------
+
+# Test coverage reports
+coverage/
+
+# Test result output
+test-results/
+playwright-report/
+
+
+# ------------------------------------------------------------
 # Logs
+# ------------------------------------------------------------
+
+# npm logs
 npm-debug.log*
+npm-error.log*
+
+# Yarn logs
 yarn-debug.log*
 yarn-error.log*
+
+# pnpm logs
 .pnpm-debug.log*
 
-# Vercel
-.vercel/
+# General application logs
+logs/
+*.log
 
-# TypeScript
-*.tsbuildinfo
-next-env.d.ts
+
+# ------------------------------------------------------------
+# Operating System Files
+# ------------------------------------------------------------
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+
+# ------------------------------------------------------------
+# Editor and IDE Files
+# ------------------------------------------------------------
+
+# Visual Studio Code workspace settings
+.vscode/
+
+# JetBrains IDE settings
+.idea/
+
+
+# ------------------------------------------------------------
+# Certificates and Private Keys
+# ------------------------------------------------------------
+
+# Private key and certificate files
+*.pem
+*.key
