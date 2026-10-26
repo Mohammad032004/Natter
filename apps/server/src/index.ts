@@ -7,6 +7,10 @@ import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { MongoClient } from "mongodb";
 
+import conversationsRouter from "./routes/conversations.js";
+import messagesRouter from "./routes/messages.js";
+import { authenticateSocket } from "./socket/auth.js";
+
 const PORT = Number(process.env.PORT ?? 4000);
 const CLIENT_URL = process.env.CLIENT_URL ?? "http://localhost:3000";
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -23,6 +27,7 @@ if (!MONGODB_DB) {
 const app = express();
 const httpServer = createServer(app);
 
+// Middleware
 app.use(
   cors({
     origin: CLIENT_URL,
@@ -32,6 +37,11 @@ app.use(
 
 app.use(express.json());
 
+// API routes
+app.use("/api/conversations", conversationsRouter);
+app.use("/api/conversations", messagesRouter);
+
+// Socket.IO server
 const io = new Server(httpServer, {
   cors: {
     origin: CLIENT_URL,
@@ -39,6 +49,7 @@ const io = new Server(httpServer, {
   },
 });
 
+// MongoDB connection
 const mongoClient = new MongoClient(MONGODB_URI);
 
 async function startServer() {
@@ -48,6 +59,7 @@ async function startServer() {
 
   console.log("✅ Connected to MongoDB");
 
+  // Health check
   app.get("/health", (_req, res) => {
     res.json({
       success: true,
@@ -55,11 +67,17 @@ async function startServer() {
     });
   });
 
+  // Authenticate every Socket.IO connection
+  io.use(authenticateSocket);
+
+  // Handle authenticated connections
   io.on("connection", (socket) => {
-    console.log("🔌 Socket connected:", socket.id);
+    const user = socket.data.user;
+
+    console.log("🔌 Authenticated user connected:", user.username);
 
     socket.on("disconnect", () => {
-      console.log("🔌 Socket disconnected:", socket.id);
+      console.log("🔌 User disconnected:", user.username);
     });
   });
 
