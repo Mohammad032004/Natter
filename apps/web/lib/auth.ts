@@ -1,3 +1,4 @@
+
 import "server-only";
 
 import { SignJWT, jwtVerify } from "jose";
@@ -32,11 +33,7 @@ export async function createSession({
   email,
   username,
 }: SessionPayload): Promise<void> {
-  if (
-    !userId.trim() ||
-    !email.trim() ||
-    !username.trim()
-  ) {
+  if (!userId.trim() || !email.trim() || !username.trim()) {
     throw new Error("Cannot create a session with incomplete user data.");
   }
 
@@ -69,16 +66,15 @@ export async function createSession({
  * Read and validate the session cookie.
  */
 export async function getSession(): Promise<SessionPayload | null> {
+  // Access cookies in the request context.
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+
+  if (!token) {
+    return null;
+  }
+
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
-
-    console.log("[AUTH] Session cookie exists:", Boolean(token));
-
-    if (!token) {
-      return null;
-    }
-
     const secret = getSessionSecret();
 
     const { payload } = await jwtVerify(token, secret, {
@@ -88,16 +84,6 @@ export async function getSession(): Promise<SessionPayload | null> {
     const userId = payload.sub;
     const email = payload.email;
     const username = payload.username;
-
-    console.log("[AUTH] Payload field check:", {
-      hasUserId: typeof userId === "string",
-      hasEmail: typeof email === "string",
-      hasUsername: typeof username === "string",
-      emailIsNonEmpty:
-        typeof email === "string" && email.trim().length > 0,
-      usernameIsNonEmpty:
-        typeof username === "string" && username.trim().length > 0,
-    });
 
     if (
       typeof userId !== "string" ||
@@ -111,17 +97,13 @@ export async function getSession(): Promise<SessionPayload | null> {
       return null;
     }
 
-    const session: SessionPayload = {
+    return {
       userId,
       email,
       username,
     };
-
-    console.log("[AUTH] Session validated successfully.");
-
-    return session;
   } catch (error) {
-    console.error("[AUTH] Session verification failed:", error);
+    console.error("[AUTH] JWT verification failed:", error);
     return null;
   }
 }
