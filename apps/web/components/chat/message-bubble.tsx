@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Check, CheckCheck } from "lucide-react";
@@ -7,12 +6,14 @@ import type { ChatMessage } from "./chat-types";
 
 type MessageBubbleProps = {
   message: ChatMessage;
+  currentUserId: string;
 };
 
 export default function MessageBubble({
   message,
+  currentUserId,
 }: MessageBubbleProps) {
-  const isMine = message.senderId === "me";
+  const isMine = message.senderId === currentUserId;
 
   return (
     <div

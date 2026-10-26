@@ -1,7 +1,6 @@
-
 "use client";
 
-import { MessageCircle } from "lucide-react";
+import { ArrowLeft, MessageCircle } from "lucide-react";
 
 import ConversationHeader from "./conversation-header";
 import MessageList from "./message-list";
@@ -11,12 +10,14 @@ import type { ChatConversation } from "./chat-types";
 
 type ConversationPanelProps = {
   conversation: ChatConversation | null;
+  currentUserId: string;
   onSendMessage: (conversationId: string, text: string) => void;
   onBack: () => void;
 };
 
 export default function ConversationPanel({
   conversation,
+  currentUserId,
   onSendMessage,
   onBack,
 }: ConversationPanelProps) {
@@ -52,7 +53,7 @@ export default function ConversationPanel({
           aria-label="Back to conversations"
           className="ml-2 rounded-full p-2 text-slate-600 transition hover:bg-slate-100 md:hidden"
         >
-          ←
+          <ArrowLeft className="h-5 w-5" />
         </button>
 
         <div className="min-w-0 flex-1">
@@ -60,15 +61,16 @@ export default function ConversationPanel({
         </div>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-hidden">
-        <MessageList messages={conversation.messages} />
-      </div>
-
-      <div className="shrink-0">
-        <MessageComposer
-          onSend={(text) => onSendMessage(conversation.id, text)}
+      <div className="min-h-0 flex-1">
+        <MessageList
+          messages={conversation.messages}
+          currentUserId={currentUserId}
         />
       </div>
+
+      <MessageComposer
+        onSend={(text) => onSendMessage(conversation.id, text)}
+      />
     </div>
   );
 }

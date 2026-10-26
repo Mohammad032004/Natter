@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -8,10 +7,12 @@ import type { ChatMessage } from "./chat-types";
 
 type MessageListProps = {
   messages: ChatMessage[];
+  currentUserId: string;
 };
 
 export default function MessageList({
   messages,
+  currentUserId,
 }: MessageListProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
   const hasMounted = useRef(false);
@@ -38,6 +39,7 @@ export default function MessageList({
           <MessageBubble
             key={message.id}
             message={message}
+            currentUserId={currentUserId}
           />
         ))}
 
